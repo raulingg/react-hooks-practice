@@ -1,0 +1,23 @@
+[
+    {
+      "id": "bigPopCorn",
+      "name": "Big PopCorn",
+      "price": 23.45
+    },
+    {
+      "id": "smallPopCorn",
+      "name": "Small PopCorn",
+      "price": 10.99
+    },
+    {
+      "id": "mediumPopCorn",
+      "name": "Medium PopCorn",
+      "price": 19.0
+    },
+    {
+      "id": "cocacolaSoda",
+      "name": "Coca Cola soda",
+      "price": 10
+    }
+  ]
+  
