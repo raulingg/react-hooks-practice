@@ -1,7 +1,8 @@
 import React, { useReducer, useCallback } from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import queries from '../graphql/queries';
 import Menu from './Menu';
 import Order from './Order';
-import products from '../data/products';
 import OrderContext from './OrderContext';
 
 const initialState = [];
@@ -22,20 +23,23 @@ function reducer(state, action) {
 }
 
 const App = () => {
+  const { loading, error, data: { products } } = useQuery(queries);
   const [order, dispatch] = useReducer(reducer, initialState);
 
   const addItemToOrder = useCallback((key) => {
     const data = products.find(item => item.id === key);
     dispatch({ type: 'ADD_ITEM', payload: { key, data } });
-  }, []);
+  },
+  [products]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return `Error! ${error.message}`;
 
   return (
-    <React.Fragment>
-      <OrderContext.Provider value={{ order, dispatch }}>
-        <Menu items={products} addItemToOrder={addItemToOrder} />
-        <Order />
-      </OrderContext.Provider>
-    </React.Fragment>
+    <OrderContext.Provider value={{ order, dispatch }}>
+      <Menu items={products} addItemToOrder={addItemToOrder} />
+      <Order />
+    </OrderContext.Provider>
   );
 };
 
